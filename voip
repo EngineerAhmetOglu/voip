@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoIP Pro Dashboard | لوحة التحكم والارباح</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jssip/3.9.1/jssip.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white font-sans">
+
+    <div class="flex h-screen">
+        <aside class="w-64 bg-gray-800 p-6 flex flex-col border-l border-gray-700">
+            <h1 class="text-2xl font-bold text-blue-500 mb-10"><i class="fas fa-signal"></i> VoIP Cloud</h1>
+            <nav class="space-y-4">
+                <a href="#" class="block p-3 rounded bg-blue-600"><i class="fas fa-home ml-2"></i> الرئيسة</a>
+                <a href="#" class="block p-3 rounded hover:bg-gray-700"><i class="fas fa-wallet ml-2"></i> الرصيد: $150.00</a>
+                <a href="#" class="block p-3 rounded hover:bg-gray-700"><i class="fas fa-history ml-2"></i> سجل المكالمات</a>
+                <a href="#" class="block p-3 rounded hover:bg-gray-700"><i class="fas fa-user-friends ml-2"></i> العملاء</a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 p-10 overflow-y-auto">
+            <header class="flex justify-between items-center mb-10">
+                <h2 class="text-3xl font-semibold">مرحباً، المسؤول</h2>
+                <div class="bg-green-500 px-4 py-2 rounded-full text-sm font-bold animate-pulse">متصل بالسيرفر</div>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                    <p class="text-gray-400">صافي الأرباح (اليوم)</p>
+                    <p class="text-3xl font-bold text-green-400">$42.50</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                    <p class="text-gray-400">المكالمات النشطة</p>
+                    <p class="text-3xl font-bold text-blue-400">12</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                    <p class="text-gray-400">دقائق الاستهلاك</p>
+                    <p class="text-3xl font-bold text-purple-400">1,240 دقيقة</p>
+                </div>
+            </div>
+
+            <div class="max-w-md mx-auto bg-gray-800 rounded-3xl p-8 border-2 border-blue-500 shadow-2xl">
+                <div class="text-center mb-6">
+                    <input id="numInput" type="text" placeholder="أدخل الرقم..." class="w-full bg-transparent text-center text-3xl font-bold outline-none border-b border-gray-600 pb-2 mb-4">
+                    <p id="callStatus" class="text-gray-500 italic">جاهز للإتصال</p>
+                </div>
+                
+                <div class="grid grid-cols-3 gap-4 mb-6">
+                    <button onclick="addNum('1')" class="bg-gray-700 h-16 rounded-full text-xl hover:bg-gray-600">1</button>
+                    <button onclick="addNum('2')" class="bg-gray-700 h-16 rounded-full text-xl hover:bg-gray-600">2</button>
+                    <button onclick="addNum('3')" class="bg-gray-700 h-16 rounded-full text-xl hover:bg-gray-600">3</button>
+                    <button onclick="addNum('4')" class="bg-gray-700 h-16 rounded-full text-xl hover:bg-gray-600">4</button>
+                    <button onclick="addNum('5')" class="bg-gray-700 h-16 rounded-full text-xl hover:bg-gray-600">5</button>
+                    <button onclick="addNum('6')" class="bg-gray-700 h-16 rounded-full text-xl hover:bg-gray-600">6</button>
+                    </div>
+
+                <div class="flex justify-around">
+                    <button onclick="makeCall()" class="bg-green-600 w-16 h-16 rounded-full text-2xl shadow-lg hover:bg-green-500 transition-all"><i class="fas fa-phone"></i></button>
+                    <button onclick="endCall()" class="bg-red-600 w-16 h-16 rounded-full text-2xl shadow-lg hover:bg-red-500 transition-all"><i class="fas fa-phone-slash"></i></button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // محاكاة منطق الإتصال
+        function addNum(n) {
+            document.getElementById('numInput').value += n;
+        }
+
+        function makeCall() {
+            const num = document.getElementById('numInput').value;
+            if(!num) return alert("يرجى إدخال الرقم");
+            
+            document.getElementById('callStatus').innerText = "جاري الإتصال بـ " + num + "...";
+            document.getElementById('callStatus').classList.add('text-green-500');
+            
+            // هنا يتم الربط بـ JsSIP لعمل اتصال حقيقي
+            console.log("إرسال طلب SIP للرقم: " + num);
+        }
+
+        function endCall() {
+            document.getElementById('callStatus').innerText = "تم إنهاء المكالمة";
+            document.getElementById('callStatus').classList.remove('text-green-500');
+            document.getElementById('numInput').value = "";
+        }
+    </script>
+</body>
+</html>
